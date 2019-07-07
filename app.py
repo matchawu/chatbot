@@ -282,7 +282,7 @@ def handle_message(event):
         dic = {'嘉義':0,'桃園':1,'屏東':2,'苗栗':3,'彰化':4,'台南':5,'新北':6,'雲林':7,'台東':8,'臺東':8,'馬祖':9,'澎湖':9}
         for i in dic:
           if i in msg:
-            air_id=dic[i]+
+            air_id=dic[i]+1
             msg_text1 = air_data[air_id]['County'] + '空氣品質: ' + air_data[air_id]['Status']
             msg_text2 = 'PM2.5 = ' + air_data[air_id]['PM2.5']
             print(msg_text1)

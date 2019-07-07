@@ -288,8 +288,8 @@ def handle_message(event):
             print(msg_text1)
             break
           else:
-            msg_text1='抱歉'
-            msg_text2='我太爛找不到'
+            msg_text1='ㄜ'
+            msg_text2='怪怪的'
 
         
         # 可以一次回傳多筆訊息(最多五筆)

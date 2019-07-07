@@ -263,12 +263,35 @@ def handle_message(event):
         return 0
 
     # 詢問空氣品質 (政府API)
+    # if "空氣" in msg or "PM2.5" in msg:
+    #     gov_api = 'http://opendata.epa.gov.tw/api/v1/AQI?%24skip=0&%24top=10&%24format=json'
+    #     response = requests.get(gov_api)
+    #     air_data = response.json()
+    #     msg_text1 = air_data[0]['SiteName'] + '空氣品質: ' + air_data[0]['Status']
+    #     msg_text2 = 'PM2.5 = ' + air_data[0]['PM2.5']
+    #     # 可以一次回傳多筆訊息(最多五筆)
+    #     line_bot_api.reply_message(event.reply_token,
+    #                                [TextSendMessage(text=msg_text1), TextSendMessage(text=msg_text2)])
+    #     return 0
+
+    # 詢問空氣品質 (政府API)
     if "空氣" in msg or "PM2.5" in msg:
         gov_api = 'http://opendata.epa.gov.tw/api/v1/AQI?%24skip=0&%24top=10&%24format=json'
         response = requests.get(gov_api)
         air_data = response.json()
-        msg_text1 = air_data[0]['SiteName'] + '空氣品質: ' + air_data[0]['Status']
-        msg_text2 = 'PM2.5 = ' + air_data[0]['PM2.5']
+        dic = {'嘉義':0,'桃園':1,'屏東':2,'苗栗':3,'彰化':4,'台南':5,'新北':6,'雲林':7,'台東':8,'臺東':8,'馬祖':9,'澎湖':9}
+        for i in dic:
+          if i in msg:
+            air_id=dic[i]
+            msg_text1 = air_data[air_id]['County'] + '空氣品質: ' + air_data[air_id]['Status']
+            msg_text2 = 'PM2.5 = ' + air_data[air_id]['PM2.5']
+            print(msg_text1)
+            break
+          else:
+            msg_text1='抱歉'
+            msg_text2='我太爛找不到'
+
+        
         # 可以一次回傳多筆訊息(最多五筆)
         line_bot_api.reply_message(event.reply_token,
                                    [TextSendMessage(text=msg_text1), TextSendMessage(text=msg_text2)])
